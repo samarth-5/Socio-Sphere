@@ -1,6 +1,10 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:socio_sphere/authentication/auth_methods.dart';
 import 'package:socio_sphere/utils/colors.dart';
+import 'package:socio_sphere/utils/utils.dart';
 import 'package:socio_sphere/widgets/text_field.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -16,6 +20,9 @@ class _SignupScreenState extends State<SignupScreen> {
   final TextEditingController _bioController = TextEditingController();
   final TextEditingController _usernameController = TextEditingController();
 
+  Uint8List? _image;
+  bool _isLoading = false;
+
   @override
   void dispose() {
     super.dispose();
@@ -23,6 +30,33 @@ class _SignupScreenState extends State<SignupScreen> {
     _passwordController.dispose();
     _usernameController.dispose();
     _bioController.dispose();
+  }
+
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    setState(() {
+      _image = img;
+    });
+  }
+
+  void signUpUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().signUpUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+        username: _usernameController.text,
+        bio: _bioController.text,
+        file: _image!);
+    print(res);
+    setState(() {
+      _isLoading = false;
+    });
+    if (res != 'success') {
+      print(res);
+      showSnackBar(context,res);
+    }
   }
 
   @override
@@ -49,16 +83,21 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 64,
-                    backgroundImage: NetworkImage(
-                        'https://store.playstation.com/store/api/chihiro/00_09_000/container/BE/nl/19/EP4067-NPEB01320_00-AVPOPULUSM003137/image?w=320&h=320&bg_color=000000&opacity=100&_version=00_09_000'),
-                  ),
+                  _image != null
+                      ? CircleAvatar(
+                          radius: 64,
+                          backgroundImage: MemoryImage(_image!),
+                        )
+                      : const CircleAvatar(
+                          radius: 64,
+                          backgroundImage: NetworkImage(
+                              'https://store.playstation.com/store/api/chihiro/00_09_000/container/BE/nl/19/EP4067-NPEB01320_00-AVPOPULUSM003137/image?w=320&h=320&bg_color=000000&opacity=100&_version=00_09_000'),
+                        ),
                   Positioned(
                     bottom: -10,
                     left: 80,
                     child: IconButton(
-                      onPressed: () {},
+                      onPressed: selectImage,
                       icon: const Icon(Icons.add_a_photo),
                     ),
                   ),
@@ -103,6 +142,7 @@ class _SignupScreenState extends State<SignupScreen> {
               ),
               //button
               InkWell(
+                onTap: signUpUser,
                 child: Container(
                   width: double.infinity,
                   alignment: Alignment.center,
@@ -115,7 +155,13 @@ class _SignupScreenState extends State<SignupScreen> {
                     ),
                     color: blueColor,
                   ),
-                  child: const Text('Log in'),
+                  child: _isLoading
+                      ? const Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : const Text('Sign up'),
                 ),
               ),
               const SizedBox(
