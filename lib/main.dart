@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:socio_sphere/responsive/mobile_screen_layout.dart';
 import 'package:socio_sphere/responsive/responsive_layout_screen.dart';
 import 'package:socio_sphere/responsive/web_Screen_layout.dart';
+import 'package:socio_sphere/screens/login_screen.dart';
 import 'package:socio_sphere/utils/colors.dart';
 
 void main() async {
@@ -34,10 +35,11 @@ class MyApp extends StatelessWidget {
       title: 'Socio Sphere',
       theme: ThemeData.dark()
           .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-      home: const ResponsiveLayout(
-        webScreenLayout: WebScreenLayout(),
-        mobileScreenLayout: MobileScreenLayout(),
-      ),
+      // home: const ResponsiveLayout(
+      //   webScreenLayout: WebScreenLayout(),
+      //   mobileScreenLayout: MobileScreenLayout(),
+      // ),
+      home: LoginScreen(),
     );
   }
 }
