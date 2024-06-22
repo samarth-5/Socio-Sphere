@@ -2,9 +2,15 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+
+//Authentication
 import 'package:socio_sphere/authentication/auth_methods.dart';
+
+//Utils
 import 'package:socio_sphere/utils/colors.dart';
 import 'package:socio_sphere/utils/utils.dart';
+
+//Widgets
 import 'package:socio_sphere/widgets/text_field.dart';
 
 class SignupScreen extends StatefulWidget {
@@ -49,12 +55,14 @@ class _SignupScreenState extends State<SignupScreen> {
         username: _usernameController.text,
         bio: _bioController.text,
         file: _image!);
-    print(res);
+    //print(res);
     setState(() {
       _isLoading = false;
     });
-    if (res != 'success') {
-      print(res);
+    if (res == 'success') {
+      showSnackBar(context,'Account created successfully!');
+    }
+    else{
       showSnackBar(context,res);
     }
   }

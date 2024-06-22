@@ -14,14 +14,15 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   if (kIsWeb) {
     await Firebase.initializeApp(
-        options: const FirebaseOptions(
-            apiKey: "AIzaSyDYiW5ewySrgjZwwvWgf7Jgb1lzoK877_w",
-            appId: "1:841268398240:web:244874999c11f271dfa1c5",
-            messagingSenderId: "841268398240",
-            projectId: "socio-sphere-97215",
-            storageBucket: "socio-sphere-97215.appspot.com",));
-  } 
-  else {
+      options: const FirebaseOptions(
+        apiKey: "AIzaSyDYiW5ewySrgjZwwvWgf7Jgb1lzoK877_w",
+        appId: "1:841268398240:web:244874999c11f271dfa1c5",
+        messagingSenderId: "841268398240",
+        projectId: "socio-sphere-97215",
+        storageBucket: "socio-sphere-97215.appspot.com",
+      ),
+    );
+  } else {
     await Firebase.initializeApp();
   }
   runApp(const MyApp());
@@ -42,7 +43,7 @@ class MyApp extends StatelessWidget {
       //   webScreenLayout: WebScreenLayout(),
       //   mobileScreenLayout: MobileScreenLayout(),
       // ),
-      home: SignupScreen(),
+      home: LoginScreen(),
     );
   }
 }

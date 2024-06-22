@@ -9,6 +9,7 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  //signing uo user
   Future<String> signUpUser({
     required String email,
     required String password,
@@ -26,9 +27,10 @@ class AuthMethods {
         //register user
         UserCredential cred = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
-        
+
         //print(cred.user!.uid);
-        String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', file, false);
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
         //adding user to database
         await _firestore.collection('users').doc(cred.user!.uid).set({
           'username': username,
@@ -40,19 +42,51 @@ class AuthMethods {
           'photoUrl': photoUrl,
         });
         res = 'success';
-      }
-      else{
+      } else {
         res = 'Please enter all the fields!';
       }
     } 
-    on FirebaseAuthException catch(err){
-      if(err.code == 'invalid-email'){
-        res='Email is badly formatted!';
-      }
-      else if(err.code == 'weak-password'){
+    on FirebaseAuthException catch (err) {
+      if (err.code == 'invalid-email') {
+        res = 'Email is badly formatted!';
+      } else if (err.code == 'weak-password') {
         res = 'Password should be atleast 6 characters!';
       }
+    } 
+    catch (err) {
+      res = err.toString();
     }
+    return res;
+  }
+
+  //logging in user
+  Future<String> logInUser({
+    required String email,
+    required String password,
+  }) async {
+    String res = 'Wrong credentials!';
+    try {
+      if (email.isNotEmpty && password.isNotEmpty) {
+        //logging in user
+        await _auth.signInWithEmailAndPassword(
+            email: email, password: password);
+        res = 'success';
+      } 
+      else {
+        res = 'Please enter all the fields!';
+      }
+    } 
+    on FirebaseAuthException catch (err) {
+      if (err.code == 'invalid-email') {
+        res = 'Enter a valid email!';
+      } 
+      else if (err.code == 'user-not-found') {
+        res = 'User not found!';
+      } 
+      else if (err.code == 'wrong-password') {
+        res = 'Wrong credentials!';
+      } 
+    } 
     catch (err) {
       res = err.toString();
     }
