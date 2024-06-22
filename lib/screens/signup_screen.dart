@@ -5,6 +5,10 @@ import 'package:image_picker/image_picker.dart';
 
 //Authentication
 import 'package:socio_sphere/authentication/auth_methods.dart';
+import 'package:socio_sphere/responsive/mobile_screen_layout.dart';
+import 'package:socio_sphere/responsive/responsive_layout_screen.dart';
+import 'package:socio_sphere/responsive/web_screen_layout.dart';
+import 'package:socio_sphere/screens/login_screen.dart';
 
 //Utils
 import 'package:socio_sphere/utils/colors.dart';
@@ -60,11 +64,24 @@ class _SignupScreenState extends State<SignupScreen> {
       _isLoading = false;
     });
     if (res == 'success') {
-      showSnackBar(context,'Account created successfully!');
+      showSnackBar(context, 'Account created successfully!');
+      Navigator.of(context).pushReplacement(
+        MaterialPageRoute(
+          builder: (context) => const ResponsiveLayout(
+            webScreenLayout: WebScreenLayout(),
+            mobileScreenLayout: MobileScreenLayout(),
+          ),
+        ),
+      );
+    } 
+    else {
+      showSnackBar(context, res);
     }
-    else{
-      showSnackBar(context,res);
-    }
+  }
+
+  void navigateToLogin() {
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 
   @override
@@ -188,7 +205,7 @@ class _SignupScreenState extends State<SignupScreen> {
                     child: const Text('Already have an account? '),
                   ),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: navigateToLogin,
                     child: const Text(
                       ' Signup',
                       style: TextStyle(
