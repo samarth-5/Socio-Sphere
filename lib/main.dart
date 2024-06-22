@@ -5,6 +5,9 @@ import 'package:socio_sphere/responsive/mobile_screen_layout.dart';
 import 'package:socio_sphere/responsive/responsive_layout_screen.dart';
 import 'package:socio_sphere/responsive/web_Screen_layout.dart';
 import 'package:socio_sphere/screens/login_screen.dart';
+
+//Screens
+import 'package:socio_sphere/screens/signup_screen.dart';
 import 'package:socio_sphere/utils/colors.dart';
 
 void main() async {
@@ -39,7 +42,7 @@ class MyApp extends StatelessWidget {
       //   webScreenLayout: WebScreenLayout(),
       //   mobileScreenLayout: MobileScreenLayout(),
       // ),
-      home: LoginScreen(),
+      home: SignupScreen(),
     );
   }
 }
