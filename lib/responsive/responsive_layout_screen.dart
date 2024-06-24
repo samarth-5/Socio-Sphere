@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:socio_sphere/providers/user_provider.dart';
-import 'package:socio_sphere/utils/dimensions.dart';
+import 'package:socio_sphere/utils/global_variables.dart';
 
 class ResponsiveLayout extends StatefulWidget {
   final Widget webScreenLayout;
