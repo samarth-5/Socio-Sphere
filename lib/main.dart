@@ -10,7 +10,6 @@ import 'package:socio_sphere/responsive/web_Screen_layout.dart';
 import 'package:socio_sphere/screens/login_screen.dart';
 
 //Screens
-import 'package:socio_sphere/screens/signup_screen.dart';
 import 'package:socio_sphere/utils/colors.dart';
 
 void main() async {

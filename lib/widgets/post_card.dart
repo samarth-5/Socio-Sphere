@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
+import 'package:socio_sphere/authentication/firestore_methods.dart';
 import 'package:socio_sphere/models/user.dart';
 import 'package:socio_sphere/providers/user_provider.dart';
 import 'package:socio_sphere/utils/colors.dart';
@@ -89,7 +90,12 @@ class _PostCardState extends State<PostCard> {
 
           //Image Section
           GestureDetector(
-            onDoubleTap: () {
+            onDoubleTap: () async {
+              await FirestoreMethods().likePost(
+                widget.snap['postId'],
+                user.uid,
+                widget.snap('likes'),
+              );
               setState(() {
                 isLikeAnimating = true;
               });
@@ -131,11 +137,17 @@ class _PostCardState extends State<PostCard> {
                 isAnimating: widget.snap['likes'].contains(user.uid),
                 smallLike: true,
                 child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
+                  onPressed: () async {
+                    await FirestoreMethods().likePost(
+                      widget.snap['postId'],
+                      user.uid,
+                      widget.snap('likes'),
+                    );
+                  },
+                  icon: widget.snap['likes'].contains(user.uid) ? const Icon(
                     Icons.favorite,
                     color: Colors.red,
-                  ),
+                  ) : const Icon(Icons.favorite_border),
                 ),
               ),
               IconButton(
