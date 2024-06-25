@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 import 'package:socio_sphere/authentication/firestore_methods.dart';
 import 'package:socio_sphere/models/user.dart';
 import 'package:socio_sphere/providers/user_provider.dart';
+import 'package:socio_sphere/screens/comment_Screen.dart';
 import 'package:socio_sphere/utils/colors.dart';
 import 'package:socio_sphere/widgets/like_animation.dart';
 
@@ -144,14 +145,22 @@ class _PostCardState extends State<PostCard> {
                       widget.snap('likes'),
                     );
                   },
-                  icon: widget.snap['likes'].contains(user.uid) ? const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  ) : const Icon(Icons.favorite_border),
+                  icon: widget.snap['likes'].contains(user.uid)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        )
+                      : const Icon(Icons.favorite_border),
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(
+                  MaterialPageRoute(
+                    builder: (context) => CommentScreen(
+                      snap : widget.snap,
+                    ),
+                  ),
+                ),
                 icon: const Icon(
                   Icons.comment_outlined,
                 ),
