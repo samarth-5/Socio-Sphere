@@ -1,15 +1,28 @@
-# socio_sphere
+# Socio Sphere
 
-A new Flutter project.
+**Socio Sphere** is a social media platform designed for sharing images. Users can upload and post photos, like and comment on posts, and track the number of friends or followers they have, promoting social interaction through visual content.
 
-## Getting Started
+## Features
 
-This project is a starting point for a Flutter application.
+- **User Authentication**: Secure sign-up and sign-in using Firebase Authentication.
+- **Image Upload**: Users can upload and share images.
+- **Likes & Comments**: Interact with posts by liking and commenting.
+- **Connection Count**: Display the number of friends or followers for each user.
+- **Real-time Database**: Use Firebase Realtime Database to store and sync data.
 
-A few resources to get you started if this is your first Flutter project:
+## Prerequisites
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- Flutter SDK
+- Firebase account
+- Basic knowledge of Flutter and Firebase
+
+## Setup Instructions
+
+###  Clone the Repository
+
+```bash
+git clone https://github.com/yourusername/socio_sphere.git
+cd socio_sphere
 
 For help getting started with Flutter development, view the
 [online documentation](https://docs.flutter.dev/), which offers tutorials,
